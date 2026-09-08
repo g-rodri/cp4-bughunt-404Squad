@@ -24,14 +24,13 @@ public abstract class Conteudo {
     protected Conteudo(String titulo, String categoria, int duracaoMinutos, int classificacaoEtaria, boolean disponivel) {
         this.titulo = titulo;
         this.categoria = categoria;
-        this.duracaoMinutos = duracaoMinutos;
+        setDuracaoMinutos(duracaoMinutos);
         this.classificacaoEtaria = classificacaoEtaria;
         this.disponivel = disponivel;
     }
 
-    public double calcularPrecoAluguel() {
-        return 9.90;
-    }
+    //as subclasses (Filme, Serie, Documentario) são obrigadas a implementar seus respectivos preços
+    public abstract double calcularPrecoAluguel();
 
     public double calcularPrecoPromocional() {
         if (this instanceof Promocionavel) {
