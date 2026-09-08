@@ -15,6 +15,11 @@ public class Documentario extends Conteudo {
         this.tema = tema;
     }
 
+        @Override
+    public double calcularPrecoAluguel() {
+        return 0.0;
+    }//garante que o preço do documentário sempre seja de graça seguindo a mesma lógica que existe em filme e série.java
+
     public String getTema() { return tema; }
     public void setTema(String tema) { this.tema = tema; }
 }
