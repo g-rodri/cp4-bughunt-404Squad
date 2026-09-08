@@ -59,23 +59,23 @@ public class ConteudoController {
         return conteudo.calcularPrecoPromocional();
     }
 
-    // POST /api/conteudos/filme - cadastra um filme (cria nova instância sem o id vindo do cliente)
+    // POST /api/conteudos/filme - cadastra um filme (cria nova instância sem o id vindo do cliente) agora usa o private minutos
     @PostMapping("/filme")
     public ResponseEntity<Filme> cadastrarFilme(@RequestBody Filme filme) {
-        Filme novo = new Filme(filme.getTitulo(), filme.getCategoria(), filme.duracaoMinutos,
+        Filme novo = new Filme(filme.getTitulo(), filme.getCategoria(), filme.getDuracaoMinutos(),
                 filme.getClassificacaoEtaria(), filme.isDisponivel(), filme.isEstreia());
         return ResponseEntity.status(201).body(conteudoRepository.save(novo));
     }
-
-    // POST /api/conteudos/serie - cadastra uma série
+    
+    // POST /api/conteudos/serie - cadastra uma série agora usa o private minutos + novo construtor 
     @PostMapping("/serie")
     public ResponseEntity<Serie> cadastrarSerie(@RequestBody Serie serie) {
-        Serie nova = new Serie(serie.getTitulo(), serie.getCategoria(), serie.duracaoMinutos,
-                serie.getClassificacaoEtaria(), serie.getNumeroTemporadas());
+        Serie nova = new Serie(serie.getTitulo(), serie.getCategoria(), serie.getDuracaoMinutos(),
+                serie.getClassificacaoEtaria(), serie.isDisponivel(), serie.getNumeroTemporadas());
         return ResponseEntity.status(201).body(conteudoRepository.save(nova));
     }
 
-    // POST /api/conteudos/documentario - cadastra um documentário
+    // POST /api/conteudos/documentario - cadastra um documentário agora usa o private minutos +
     @PostMapping("/documentario")
     public ResponseEntity<Documentario> cadastrarDocumentario(@RequestBody Documentario documentario) {
         Documentario novo = new Documentario(documentario.getTitulo(), documentario.getCategoria(),
