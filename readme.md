@@ -95,7 +95,9 @@ propósito entre as duas nesse projeto e o que mudaria no código se o Document�
 passasse a ter promoções — quais classes/linhas seriam tocadas e quais ficariam
 intactas? O que isso diz sobre o design do sistema?
 
----
+Conteudo é abstrata porque define o que conteúdo tem que ser todo Filme, Serie e Documentario herda os atributos básicos e é obrigado a implementar calcularPrecoAluguel() (agora que é abstract). Já Promocionavel é uma interface porque representa algo opcional, nem todo conteúdo entra em promoção. Por isso Filme e Serie fazem implements Promocionavel, e Documentario simplesmente não implementa nada — o que já bate com o contrato.
+
+Se Documentario passasse a ter promoção, a mudança seria mínima, basta adicionar implements Promocionavel nele e escrever seu aplicarPromocao(double preco), igual Filme/Serie já fazem. Nada mais mudaria— Conteudo.java e Promocionavel.java ficam intactos, porque calcularPrecoPromocional() já checa instanceof Promocionavel de forma genérica, sem saber qual subclasse é.
 
 ## Parte 4 — Espaço livre (opcional)
 
