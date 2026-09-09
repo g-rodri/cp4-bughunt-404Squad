@@ -59,6 +59,9 @@ usa `ConteudoRepository`). Explique por que o Spring precisa gerenciar esses obj
 em vez de criarmos com `new ConteudoRepository()`. O que exatamente o Spring faz ao
 injetar um bean, e por que isso não funcionaria com um `new` comum?
 
+RESPOSTA:
+O Spring gerencia esses objetos porque ConteudoRepository é uma interface, ou seja, não dá para dar um new direto nela, ele cria dinamicamente uma implementação em tempo de execução usando proxies. Quando usamos @Autowired, o container injeta essa instância pronta e já "conectada" ao banco e ao JPA. Fazer um new manual criaria um objeto cru, totalmente desligado do ecossistema do Spring.
+
 ### 2. JDBC vs Spring Data JPA (Aulas 12 e 13)
 Na Aula 12 escrevemos um `ProdutoDAO` na mão com `Connection`, `PreparedStatement` e
 `ResultSet`. Aqui o `ConteudoRepository` tem 2 linhas e faz CRUD completo. Compare as
