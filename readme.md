@@ -71,6 +71,8 @@ sem mensagem útil para o cliente. Explique a diferença entre `extends Exceptio
 `extends RuntimeException` no contexto desse bug, e como você fez a mensagem da
 regra (classificação indicativa) chegar de forma clara ao cliente da API.
 
+extends Exception cria uma exceção checked o Java obriga a tratar ou declarar em todo método no caminho, senão não compila. enquanto extends RuntimeException cria uma unchecked pode ser lançada sem essa obrigação, ClassificacaoIndicativaException era checked mas não tinha handler no GlobalExceptionHandler, então o Spring não sabia o que fazer com ela a correção foi adicionar um @ExceptionHandler(ClassificacaoIndicativaException.class) retornando 422 com a mensagem da exceção no corpo da resposta assim o GlobalExceptionHandler intercepta e transforma o erro interno numa resposta clara pro cliente, em vez de deixar ele estourar cru.
+
 ### 4. Sobrescrita vs sobrecarga (Aula 7)
 Um dos bugs compilava sem nenhum erro: o método da `Serie` parecia sobrescrever
 `calcularPrecoAluguel`, mas na verdade sobrecarregava. Explique a diferença entre
