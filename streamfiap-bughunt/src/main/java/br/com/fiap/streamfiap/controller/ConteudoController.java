@@ -53,7 +53,7 @@ public class ConteudoController {
                 filme.getClassificacaoEtaria(), filme.isDisponivel(), filme.isEstreia());
         return ResponseEntity.status(201).body(conteudoRepository.save(novo));
     }
-    
+
     // POST /api/conteudos/serie - cadastra uma série agora usa o private minutos + novo construtor 
     @PostMapping("/serie")
     public ResponseEntity<Serie> cadastrarSerie(@RequestBody Serie serie) {
@@ -70,3 +70,4 @@ public class ConteudoController {
                 documentario.isDisponivel(), documentario.getTema());
         return ResponseEntity.status(201).body(conteudoRepository.save(novo));
     }
+}
