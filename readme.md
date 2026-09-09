@@ -60,7 +60,7 @@ em vez de criarmos com `new ConteudoRepository()`. O que exatamente o Spring faz
 injetar um bean, e por que isso não funcionaria com um `new` comum?
 
 RESPOSTA:
-O Spring gerencia esses objetos porque ConteudoRepository é uma interface, ou seja, não dá para dar um new direto nela, ele cria dinamicamente uma implementação em tempo de execução usando proxies. Quando usamos @Autowired, o container injeta essa instância pronta e já "conectada" ao banco e ao JPA. Fazer um new manual criaria um objeto cru, totalmente desligado do ecossistema do Spring.
+O Spring gerencia esses objetos porque ConteudoRepository é uma interface, ou seja, não dá para dar um new direto nela, ele cria dinamicamente uma implementação em tempo de execução usando proxies. Quando usamos @Autowired, o container injeta essa instância pronta e já "conectada" ao banco e ao JPA. Fazer um new manual criaria um objeto cru, totalmente desligado do ecossistema do Spring. Assim temos o princípio de Inversão de Controle (IoC) que em vez de a classe controlar a criação das suas próprias dependências, o framework gerencia todo o ciclo de vida delas (como o escopo Singleton), promovendo o desacoplamento e garantindo que tudo funcione integrado de forma transparente.
 
 ### 2. JDBC vs Spring Data JPA (Aulas 12 e 13)
 Na Aula 12 escrevemos um `ProdutoDAO` na mão com `Connection`, `PreparedStatement` e
