@@ -65,12 +65,16 @@ Na Aula 12 escrevemos um `ProdutoDAO` na mão com `Connection`, `PreparedStateme
 duas abordagens: o que o Spring Data JPA automatiza, o que o JDBC/DAO ainda resolve
 melhor, e como o `findByCategoria` consegue funcionar sem implementação.
 
+RESPOSTA:
+No ProdutoDAO da Aula 12, cada operação exigia escrever manualmente Connection, PreparedStatement, ResultSet e fechar tudo direito pra não vazar recursos em querys. O ConteudoRepository estende JpaRepository, e o Spring Data JPA já entrega CRUD completo (save, findById, findAll, delete) sem implementar nada, porque ele gera a implementação em tempo de execução por trás dos panos. O findByCategoria funciona do mesmo jeito o Spring interpreta o nome do método ("find By Categoria") e monta a query automaticamente, sem precisar escrever SQL.
+
 ### 3. Exceções checked vs unchecked (Aula 11)
 A `ClassificacaoIndicativaException` estourava como um erro genérico do servidor,
 sem mensagem útil para o cliente. Explique a diferença entre `extends Exception` e
 `extends RuntimeException` no contexto desse bug, e como você fez a mensagem da
 regra (classificação indicativa) chegar de forma clara ao cliente da API.
 
+RESPOSTA:
 extends Exception cria uma exceção checked o Java obriga a tratar ou declarar em todo método no caminho, senão não compila. enquanto extends RuntimeException cria uma unchecked pode ser lançada sem essa obrigação, ClassificacaoIndicativaException era checked mas não tinha handler no GlobalExceptionHandler, então o Spring não sabia o que fazer com ela a correção foi adicionar um @ExceptionHandler(ClassificacaoIndicativaException.class) retornando 422 com a mensagem da exceção no corpo da resposta assim o GlobalExceptionHandler intercepta e transforma o erro interno numa resposta clara pro cliente, em vez de deixar ele estourar cru.
 
 ### 4. Sobrescrita vs sobrecarga (Aula 7)
@@ -78,6 +82,7 @@ Um dos bugs compilava sem nenhum erro: o método da `Serie` parecia sobrescrever
 `calcularPrecoAluguel`, mas na verdade sobrecarregava. Explique a diferença entre
 override e overload nesse caso e por que a anotação `@Override` teria impedido o bug.
 
+RESPOSTA:
 (override) é quando o método filho tem exatamente a mesma assinatura do método da classe-mãe. Já (overload) é quando o nome é igual mas os parâmetros são diferentes. no bug06: a classe-mãe tinha calcularPrecoAluguel() sem parâmetro, mas Serie declarava calcularPrecoAluguel(double desconto) o original continuava ativo por trás e, como não era abstrato ainda (bug02), Serie herdava o R$9,90 padrão sem ninguém notar. Por isso compilava liso. O @Override resolve forçando o compilador a checar se a assinatura bate com algo lá Se não bater, ele acusa erro na hora.
 
 ### 5. Onde blindar o objeto? (Aulas 3, 4 e 13)
@@ -86,6 +91,7 @@ nulos). Em quais lugares (construtor, setter, método do model) cada tipo de val
 deve ficar? Justifique usando os bugs que você encontrou e explique por que validar só
 em um lugar não foi suficiente.
 
+RESPOSTA:
 Formato do dado (setter/construtor): se o valor em si já nasce errado, tipo duracaoMinutos <= 0 (bug01), a checagem fica no setter. E o construtor precisa usar esse setter que não havia sido atribuido de forma correta, tinha validação só numa porta de entrada, e a outra (construtor) passava reto. Por isso foi necessário multiplas validações
 Regra de negócio (método do model): quando a validação depende do momento, tipo créditos vs. preço do aluguel (bug10) ou se o conteúdo está disponível (bug11), não dá pra travar isso no construtor — o valor é válido isoladamente, o problema é o contexto na hora da ação. Por isso essas checagens ficam dentro do alugar(), não em setters.
 
@@ -95,9 +101,8 @@ propósito entre as duas nesse projeto e o que mudaria no código se o Document�
 passasse a ter promoções — quais classes/linhas seriam tocadas e quais ficariam
 intactas? O que isso diz sobre o design do sistema?
 
-Conteudo é abstrata porque define o que conteúdo tem que ser todo Filme, Serie e Documentario herda os atributos básicos e é obrigado a implementar calcularPrecoAluguel() (agora que é abstract). Já Promocionavel é uma interface porque representa algo opcional, nem todo conteúdo entra em promoção. Por isso Filme e Serie fazem implements Promocionavel, e Documentario simplesmente não implementa nada — o que já bate com o contrato.
-
-Se Documentario passasse a ter promoção, a mudança seria mínima, basta adicionar implements Promocionavel nele e escrever seu aplicarPromocao(double preco), igual Filme/Serie já fazem. Nada mais mudaria— Conteudo.java e Promocionavel.java ficam intactos, porque calcularPrecoPromocional() já checa instanceof Promocionavel de forma genérica, sem saber qual subclasse é.
+RESPOSTA:
+Conteudo é uma classe abstrata que serve de base para garantir os atributos comuns e forçar o calcularPrecoAluguel(), enquanto Promocionavel é uma interface usada apenas para comportamentos opcionais que nem todo item possui. Se o documentário passasse a ter promoções, a mudança seria bem simples: bastaria adicionar implements Promocionavel nele e escrever a lógica do método, deixando Conteudo e a interface totalmente intactos.
 
 ## Parte 4 — Espaço livre (opcional)
 
