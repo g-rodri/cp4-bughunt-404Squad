@@ -102,7 +102,7 @@ passasse a ter promoções — quais classes/linhas seriam tocadas e quais ficar
 intactas? O que isso diz sobre o design do sistema?
 
 RESPOSTA:
-Conteudo é uma classe abstrata que serve de base para garantir os atributos comuns e forçar o calcularPrecoAluguel(), enquanto Promocionavel é uma interface usada apenas para comportamentos opcionais que nem todo item possui. Se o documentário passasse a ter promoções, a mudança seria bem simples: bastaria adicionar implements Promocionavel nele e escrever a lógica do método, deixando Conteudo e a interface totalmente intactos.Isso mostra que o design do sistema permite estender comportamentos de forma flexivel 
+Conteudo é uma classe abstrata que serve de base para garantir os atributos comuns e forçar o calcularPrecoAluguel(), enquanto Promocionavel é uma interface usada apenas para comportamentos opcionais que nem todo item possui. Se o documentário passasse a ter promoções, a mudança seria bem simples: bastaria adicionar implements Promocionavel nele e escrever a lógica do método, deixando Conteudo e a interface totalmente intactos.Isso mostra que o design do sistema permite estender comportamentos de forma flexivel sem precisar mexer na estrutura base que já funciona.
 
 ## Parte 4 — Espaço livre (opcional)
 
