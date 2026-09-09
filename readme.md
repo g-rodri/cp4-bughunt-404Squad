@@ -1,30 +1,24 @@
 # Checkpoint 4 — Bug Hunt StreamFIAP
 
-> Copie este arquivo para a raiz do seu repositório com o nome **README.md**
-> e preencha todas as seções.
-
 ## Identificação
 
 **Grupo:** **404Squad**
 
 | Integrante | RM | Turma |
-2CCPX
-Claus Moreira Rm 565503
-Julia Lopes Rm 566557
-Guilherme Martins Rm 566570
-Gabriel Rodrigues Rm 566475
+|---|---|---|
+| Claus Moreira | 565503 | 2CCPX |
+| Julia Lopes | 566557 | 2CCPX |
+| Guilherme Martins | 566570 | 2CCPX |
+| Gabriel Rodrigues | 566475 | 2CCPX |
 
 | Campo | |
 |---|---|
-| **Total de bugs corrigidos** | 07 / 12 |
-| **Total de ajustes de Clean Code** | 01 / 6 |
+| **Total de bugs corrigidos** | 12 / 12 |
+| **Total de ajustes de Clean Code** | 6 / 6 |
 
 ---
 
 ## Parte 1 — Bugs encontrados
-
-> Uma linha por bug, na ordem em que você os encontrou. Use a numeração dos seus
-> commits (`fix: bug01 ...`). Preencha TODAS as colunas — metade da nota está aqui.
 
 | # | Sintoma observado (o que fiz/vi) | Causa raiz (arquivo e linha aproximada) | Correção aplicada | Conceito da disciplina |
 |---|---|---|---|---|
@@ -58,9 +52,6 @@ logica matematica
 ---
 
 ## Parte 3 — Perguntas de reflexão
-
-> Responda com suas palavras, 5 a 10 linhas cada, **usando o código real do projeto
-> como exemplo**. Respostas genéricas de tutorial não pontuam.
 
 ### 1. Injeção de dependência (Aula 13)
 Os controllers recebem os repositories via `@Autowired` (ex.: `ConteudoController`
