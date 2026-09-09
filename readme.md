@@ -76,11 +76,16 @@ Um dos bugs compilava sem nenhum erro: o método da `Serie` parecia sobrescrever
 `calcularPrecoAluguel`, mas na verdade sobrecarregava. Explique a diferença entre
 override e overload nesse caso e por que a anotação `@Override` teria impedido o bug.
 
+(override) é quando o método filho tem exatamente a mesma assinatura do método da classe-mãe. Já (overload) é quando o nome é igual mas os parâmetros são diferentes. no bug06: a classe-mãe tinha calcularPrecoAluguel() sem parâmetro, mas Serie declarava calcularPrecoAluguel(double desconto) o original continuava ativo por trás e, como não era abstrato ainda (bug02), Serie herdava o R$9,90 padrão sem ninguém notar. Por isso compilava liso. O @Override resolve forçando o compilador a checar se a assinatura bate com algo lá Se não bater, ele acusa erro na hora.
+
 ### 5. Onde blindar o objeto? (Aulas 3, 4 e 13)
 Vimos bugs de dados inválidos aceitos (duração negativa, créditos negativos, campos
 nulos). Em quais lugares (construtor, setter, método do model) cada tipo de validação
 deve ficar? Justifique usando os bugs que você encontrou e explique por que validar só
 em um lugar não foi suficiente.
+
+Formato do dado (setter/construtor): se o valor em si já nasce errado, tipo duracaoMinutos <= 0 (bug01), a checagem fica no setter. E o construtor precisa usar esse setter que não havia sido atribuido de forma correta, tinha validação só numa porta de entrada, e a outra (construtor) passava reto. Por isso foi necessário multiplas validações
+Regra de negócio (método do model): quando a validação depende do momento, tipo créditos vs. preço do aluguel (bug10) ou se o conteúdo está disponível (bug11), não dá pra travar isso no construtor — o valor é válido isoladamente, o problema é o contexto na hora da ação. Por isso essas checagens ficam dentro do alugar(), não em setters.
 
 ### 6. Abstração e interface (Aulas 8 e 9)
 `Conteudo` é abstrata e `Promocionavel` é uma interface. Explique a diferença de
